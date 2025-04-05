@@ -43,12 +43,14 @@ public class UserController {
 		// 名前が空の場合やパスワードがからの場合にエラーとする
 		if (email == null || password == null) {
 			model.addAttribute("message", "メールアドレスとパスワードを入力してください");
+			return "login";
 		}
-		return "login";
+		// エラーがなければ通常通りブログ一覧へ
+		return "redilect:/blogs";
 	}
 
 	// 新規登録画面を表示
-	@GetMapping("/new")
+	@GetMapping("/users/new")
 	public String signup(
 			@RequestParam(name = "error", defaultValue = "") String error,
 			Model model) {
@@ -62,17 +64,25 @@ public class UserController {
 	}
 
 	// 新規登録の実行
-	@PostMapping("/new")
-	public String create(
+	@PostMapping("users/add")
+	public String add(
 			@RequestParam("name") String name,
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,
+			@RequestParam("password2") String password2,
 			Model model) {
 		// パラメータが空文字の場合はエラーメッセージを出力
 		if (name == null || name.length() == 0 || email == null || email.length() == 0 || password == null
-				|| password.length() == 0) {
+				|| password.length() == 0 || password2 == null || password2.length() == 0) {
 			model.addAttribute("message", "名前、メールアドレスとパスワードを入力してください");
+			return "signup";
 		}
-		return "signup";
+
+		if (password != password2) {
+			model.addAttribute("message", "パスワードが違います");
+			return "signup";
+		}
+		// 「/login」へのリダイレクト
+		return "redirect:/login";
 	}
 }

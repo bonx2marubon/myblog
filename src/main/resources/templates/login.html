@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ログイン</title>
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
@@ -13,17 +14,19 @@
 	</header>
 	<main>
 		<h2>ログイン</h2>
-		<form action="/login" method="post">
-			<span th:text="${message}" style="color: red;"></span>
-			<br>
-			<input type="text" name="email" placeholder="メールアドレス">
-			<br>
-			<input type="text" name="password" placeholder="パスワード">
-			<br>
-			<button>ログイン</button>
-		</form>
+		<div class="login-box">
+			<form action="/login" method="post">
+				<span th:text="${message}" style="color: red;"></span>
+				<br>
+				<input type="text" name="email" placeholder="メールアドレス">
+				<br>
+				<input type="text" name="password" placeholder="パスワード">
+				<br>
+				<button>ログイン</button>
+			</form>
+		</div>
+		<a href="/users/new">ユーザー新規作成</a>
 	</main>
-	<a href="/users/new">ユーザー新規作成</a>
 
 </body>
 
