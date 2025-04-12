@@ -64,25 +64,27 @@ public class UserController {
 	}
 
 	// 新規登録の実行
-	@PostMapping("users/add")
+	@PostMapping("/users/add")
 	public String add(
 			@RequestParam("name") String name,
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,
-			@RequestParam("password2") String password2,
+			@RequestParam("confirmPassword") String confirmPassword,
 			Model model) {
 		// パラメータが空文字の場合はエラーメッセージを出力
 		if (name == null || name.length() == 0 || email == null || email.length() == 0 || password == null
-				|| password.length() == 0 || password2 == null || password2.length() == 0) {
-			model.addAttribute("message", "名前、メールアドレスとパスワードを入力してください");
+				|| password.length() == 0 || confirmPassword == null || confirmPassword.length() == 0) {
+			model.addAttribute("message", "全ての項目を入力してください");
 			return "signup";
 		}
 
-		if (password != password2) {
-			model.addAttribute("message", "パスワードが違います");
+		// パスワードとパスワード（確認）が一致しない場合はエラーメッセージを出力
+		if (!password.equals(confirmPassword)) {
+			model.addAttribute("message", "パスワードとパスワード（確認）が違います");
 			return "signup";
 		}
-		// 「/login」へのリダイレクト
+
+		// 上記2つの条件を満たしている場合はログイン画面に遷移
 		return "redirect:/login";
 	}
 }

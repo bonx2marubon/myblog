@@ -4,26 +4,23 @@
 <head>
 	<meta charset="UTF-8">
 	<title>新規登録</title>
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
 	<header>
-		<h1>サンプルブログ</h1>
+		<h1><a href="/login">サンプルブログ</a></h1>
 	</header>
 	<main>
 		<h2>ユーザー新規作成</h2>
-		<div class="signup-box">
-			<form action="/new" method="post">
-				<span th:text="${message}" style="color: red"></span>
-				<br>
+		<div class="login-box">
+			<form action="/users/add" method="post">
+				<span class="error-message" th:text="${message}"></span>
 				<input type="text" name="name" placeholder="名前">
-				<br>
 				<input type="text" name="email" placeholder="メールアドレス">
-				<br>
 				<input type="text" name="password" placeholder="パスワード">
-				<br>
-				<input type="text" name="password" placeholder="パスワード（確認）">
+				<input type="text" name="confirmPassword" placeholder="パスワード（確認）">
 				<div>
 					<button>新規作成</button>
 				</div>
