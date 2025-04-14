@@ -1,10 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>新規記事作成</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
 </head>
+
 <body>
+	<header th:replace="header"></header>
+	<main>
+		<h3>新規記事作成</h3>
+		<form action="/blog/add" method="post">
+			<table>
+				<tr>
+					<th>カテゴリー</th>
+					<td>
+						<!--<input type="radio" name="">仕事</td>　　ラジオボタンでデータを送るやり方がわからない！-->
+						<!--<input type="radio" name="">遊び</td>　　同じく -->
+						<!--<input type="radio" name="">勉強</td>　　同じく -->
+				</tr>
+				<tr>
+					<th>タイトル</th>
+					<td>
+						<input type="text" name="title">
+					</td>
+				</tr>
+				<tr>
+					<th>内容</th>
+					<td>
+						<input type="text" name="text">
+					</td>
+				</tr>
+			</table>
+		</form>
+	</main>
 
 </body>
+
 </html>
