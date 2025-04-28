@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ブログ一覧画面</title>
+	<link rel="stylesheet" text="text/css" href="/css/reset.css">
+	<link rel="stylesheet" text="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<header th:replace="header"></header>
+	<main>
+		<nav>
+			<a href="/blogs">全商品</a>
+			<a th:each="blogCategory:${categories}" th:href="@{/blogs(categoryId=${blogCategory.id})}">
+				<span th:text="${blogCategory.name}"></span>
+			</a>
+		</nav>
+		<h3><a href="/blogs/new">新規記事作成</a></h3>
+		<table>
+			<tr>
+				<th>NO</th>
+				<th>タイトル</th>
+				<th>変更</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="blog:${blogs}">
+				<td th:text="${blog.id}"></td>
+				<td th:text="${blog.title}"></td>
+				<td style="width: 200px">
+					<form action="/blogs/edit" method="post">
+						<input type="hidden" name="blogId" th:value="${blog.id}">
+						<button>変更</button>
+					</form>
+				</td>
+				<td style="width: 200px;">
+					<form action="/blogs/delete" method="post">
+						<input type="hidden" name="blogId" th:value="${blog.id}">
+						<button>削除</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</main>
+</body>
+</html>
