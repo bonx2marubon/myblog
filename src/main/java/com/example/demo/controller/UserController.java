@@ -48,16 +48,17 @@ public class UserController {
 			@RequestParam("password") String password,
 			Model model) {
 
-		// メールアドレスやパスワードが空の場合にエラーとする
-		if (email == null || email.length() == 0 || password == null || password.length() == 0) {
+		// 入力チェック
+		if (email.isEmpty() || password.isEmpty()) {
 			model.addAttribute("message", "メールアドレスとパスワードを入力してください");
 			return "login";
 		}
 
+		// ユーザーをメールアドレスとパスワードで検索（1件のみ返す）
 		User user = userRepository.findByEmailAndPassword(email, password);
 
 		if (user == null) {
-			model.addAttribute("message", "アカウントがありません");
+			model.addAttribute("message", "アカウントがみつかりません");
 			return "login";
 		}
 
@@ -90,16 +91,16 @@ public class UserController {
 			@RequestParam("password") String password,
 			@RequestParam("confirmPassword") String confirmPassword,
 			Model model) {
+
 		// パラメータが空文字の場合はエラーメッセージを出力
-		if (name == null || name.length() == 0 || email == null || email.length() == 0 || password == null
-				|| password.length() == 0 || confirmPassword == null || confirmPassword.length() == 0) {
+		if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
 			model.addAttribute("message", "全ての項目を入力してください");
 			return "signup";
 		}
 
 		// パスワードとパスワード（確認）が一致しない場合はエラーメッセージを出力
 		if (!password.equals(confirmPassword)) {
-			model.addAttribute("message", "パスワードとパスワード（確認）が違います");
+			model.addAttribute("message", "パスワードが一致しません");
 			return "signup";
 		}
 		User user = new User(name, email, password);
