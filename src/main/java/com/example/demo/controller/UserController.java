@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.User;
 import com.example.demo.model.Account;
+import com.example.demo.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +21,11 @@ public class UserController {
 
 	@Autowired
 	Account account;
+
+	@Autowired
+	UserRepository userRepository;
+
+	// Entityは書かなくていい！！！
 
 	// ログイン画面を表示
 	@GetMapping({ "/", "/login", "/logout" })
@@ -40,13 +47,25 @@ public class UserController {
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,
 			Model model) {
-		// 名前が空の場合やパスワードがからの場合にエラーとする
-		if (email == null || password == null) {
+
+		// メールアドレスやパスワードが空の場合にエラーとする
+		if (email == null || email.length() == 0 || password == null || password.length() == 0) {
 			model.addAttribute("message", "メールアドレスとパスワードを入力してください");
 			return "login";
 		}
+
+		User user = userRepository.findByEmailAndPassword(email, password);
+
+		if (user == null) {
+			model.addAttribute("message", "アカウントがありません");
+			return "login";
+		}
+
+		account.setId(user.getId());
+		account.setName(user.getName());
+
 		// エラーがなければ通常通りブログ一覧へ
-		return "redilect:/blogs";
+		return "redirect:/blogs";
 	}
 
 	// 新規登録画面を表示
@@ -83,7 +102,9 @@ public class UserController {
 			model.addAttribute("message", "パスワードとパスワード（確認）が違います");
 			return "signup";
 		}
+		User user = new User(name, email, password);
 
+		userRepository.save(user);
 		// 上記2つの条件を満たしている場合はログイン画面に遷移
 		return "redirect:/login";
 	}
