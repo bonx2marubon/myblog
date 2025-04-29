@@ -10,11 +10,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Blog;
 import com.example.demo.entity.Category;
+import com.example.demo.entity.User;
+import com.example.demo.model.Account;
 import com.example.demo.repository.BlogRepository;
 import com.example.demo.repository.CategoryRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class BlogController {
+
+	@Autowired
+	Account account;
+
+	@Autowired
+	HttpSession session;
 
 	@Autowired
 	CategoryRepository categoryRepository;
@@ -26,7 +36,12 @@ public class BlogController {
 	@GetMapping("/blogs") // URL
 	public String index(
 			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
-			Model model) {
+			Model model, HttpSession session) {
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("userName", loginUser.getName());
 
 		// 全カテゴリー一覧を取得
 		List<Category> categoryList = categoryRepository.findAll();

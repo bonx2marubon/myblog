@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.User;
-import com.example.demo.model.Account;
 import com.example.demo.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -43,7 +42,8 @@ public class UserController {
 	public String login(
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,
-			Model model) {
+			Model model,
+			HttpSession session) {
 
 		// 入力チェック
 		if (email.isEmpty() || password.isEmpty()) {
@@ -59,10 +59,7 @@ public class UserController {
 			return "login";
 		}
 
-		Account account = new Account();
-		account.setId(user.getId());
-		account.setName(user.getName());
-		session.setAttribute("Account", account);
+		session.setAttribute("loginUser", user);
 
 		// エラーがなければ通常通りブログ一覧へ
 		return "redirect:/blogs";
