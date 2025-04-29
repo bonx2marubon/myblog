@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.User;
+import com.example.demo.model.Account;
 import com.example.demo.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
+
+	@Autowired
+	Account account;
 
 	@Autowired
 	HttpSession session;
@@ -59,7 +63,9 @@ public class UserController {
 			return "login";
 		}
 
-		session.setAttribute("loginUser", user);
+		Account account = new Account(user.getId(), user.getName());
+
+		session.setAttribute("loginUser", account);
 
 		// エラーがなければ通常通りブログ一覧へ
 		return "redirect:/blogs";

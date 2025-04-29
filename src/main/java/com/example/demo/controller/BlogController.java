@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Blog;
 import com.example.demo.entity.Category;
-import com.example.demo.entity.User;
 import com.example.demo.model.Account;
 import com.example.demo.repository.BlogRepository;
 import com.example.demo.repository.CategoryRepository;
@@ -37,7 +36,7 @@ public class BlogController {
 	public String index(
 			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
 			Model model, HttpSession session) {
-		User loginUser = (User) session.getAttribute("loginUser");
+		Account loginUser = (Account) session.getAttribute("loginUser");
 		if (loginUser == null) {
 			return "redirect:/login";
 		}
