@@ -20,9 +20,6 @@ public class UserController {
 	HttpSession session;
 
 	@Autowired
-	Account account;
-
-	@Autowired
 	UserRepository userRepository;
 
 	// Entityは書かなくていい！！！
@@ -62,8 +59,10 @@ public class UserController {
 			return "login";
 		}
 
+		Account account = new Account();
 		account.setId(user.getId());
 		account.setName(user.getName());
+		session.setAttribute("Account", account);
 
 		// エラーがなければ通常通りブログ一覧へ
 		return "redirect:/blogs";
