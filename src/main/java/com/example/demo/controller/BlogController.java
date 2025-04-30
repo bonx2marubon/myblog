@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Blog;
@@ -61,11 +62,19 @@ public class BlogController {
 
 	// 新規記事作成画面を表示
 	@GetMapping("/blogs/new") //URL
-	public String add() {
-		return "addArticle";
+	public String postArticle() {
+		return "addArticle"; // HTML
 	}
 
 	// 新規記事作成の実行
+	@PostMapping("/blogs/add")
+	public String add(
+			@RequestParam("categoryId") Integer categoryId,
+			@RequestParam("title") String title,
+			@RequestParam("body") String body) {
+		List<Blog> allBlog = blogList.getBlog();
+
+	}
 
 	// 記事更新用の記述
 	// 記事更新の実行
