@@ -12,14 +12,18 @@
 	<header th:replace="header"></header>
 	<main>
 		<h3>新規記事作成</h3>
-		<form action="/blog/add" method="post">
+		<form action="/blogs/add" method="post">
 			<table>
 				<tr>
 					<th>カテゴリー</th>
 					<td>
-						<!--<input type="radio" name="">仕事</td>　　ラジオボタンでデータを送るやり方がわからない！-->
-						<!--<input type="radio" name="">遊び</td>　　同じく -->
-						<!--<input type="radio" name="">勉強</td>　　同じく -->
+						<input type="radio" id="category_work" name="categoryId" value="1" checked />
+						<label for="category_work">仕事</label>
+						<input type="radio" id="category_entertainment" name="categoryId" value="2" />
+						<label for="category_entertainment">遊び</label>
+						<input type="radio" id="category_study" name="categoryId" value="3" />
+						<label for="category_study">勉強</label>
+					</td>
 				</tr>
 				<tr>
 					<th>タイトル</th>
@@ -30,13 +34,15 @@
 				<tr>
 					<th>内容</th>
 					<td>
-						<input type="text" name="text">
+						<textarea name="body"></textarea>
 					</td>
 				</tr>
 			</table>
+			<div>
+				<button>新規作成</button>
+			</div>
 		</form>
 	</main>
-
 </body>
 
 </html>

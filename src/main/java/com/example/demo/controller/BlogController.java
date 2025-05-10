@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -66,13 +67,41 @@ public class BlogController {
 	public String add(
 			@RequestParam("categoryId") Integer categoryId,
 			@RequestParam("title") String title,
-			@RequestParam("body") String body) {
-		List<Blog> allBlog = blogList.getBlog();
+			@RequestParam("body") String body,
+			Model model) {
 
+		// Blogオブジェクトの作成
+		Blog blog = new Blog(categoryId, title, body);
+		// blogsテーブルへの反映(INSERT)
+		blogRepository.save(blog);
+		// リダイレクト
+		return "redirect:/blogs";
 	}
 
 	// 記事更新用の記述
+	@GetMapping("/blogs/{id}/edit")
+	public String edit(@PathVariable("id") Integer id, Model model) {
+		Blog blog = blogRepository.findById(id).get();
+		model.addAttribute("blog", blog);
+		return "editArticle";
+	}
+
 	// 記事更新の実行
+	@PostMapping("/blogs/{id}/edit")
+	public String update(
+			@PathVariable("id") Integer id,
+			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
+			@RequestParam(value = "title", defaultValue = "") String title,
+			@RequestParam(value = "body", defaultValue = "") String body,
+			Model model) {
+
+		// Blogオブジェクトの生成
+		Blog blog = new Blog(categoryId, title, body);
+		// blogsテーブルへの反映(UPDATE)
+		blogRepository.save(blog);
+		// 「/blogs」にGETでリダイレクト
+		return "redirect:/blogs";
+	}
 
 	// 記事削除用の記述
 	// 記事削除の実行
