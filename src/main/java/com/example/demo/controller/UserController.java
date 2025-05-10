@@ -17,10 +17,10 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 
 	@Autowired
-	Account account;
+	HttpSession session;
 
 	@Autowired
-	HttpSession session;
+	Account account;
 
 	@Autowired
 	UserRepository userRepository;
@@ -46,8 +46,7 @@ public class UserController {
 	public String login(
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,
-			Model model,
-			HttpSession session) {
+			Model model) {
 
 		// 入力チェック
 		if (email.isEmpty() || password.isEmpty()) {
@@ -63,9 +62,8 @@ public class UserController {
 			return "login";
 		}
 
-		Account account = new Account(user.getId(), user.getName());
-
-		session.setAttribute("loginUser", account);
+		//ここからきじゅつふやしてる
+		account.setName(user.getName());
 
 		// エラーがなければ通常通りブログ一覧へ
 		return "redirect:/blogs";

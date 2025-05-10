@@ -21,10 +21,10 @@ import jakarta.servlet.http.HttpSession;
 public class BlogController {
 
 	@Autowired
-	Account account;
+	HttpSession session;
 
 	@Autowired
-	HttpSession session;
+	Account account;
 
 	@Autowired
 	CategoryRepository categoryRepository;
@@ -36,12 +36,7 @@ public class BlogController {
 	@GetMapping("/blogs") // URL
 	public String index(
 			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
-			Model model, HttpSession session) {
-		Account loginUser = (Account) session.getAttribute("loginUser");
-		if (loginUser == null) {
-			return "redirect:/login";
-		}
-		model.addAttribute("userName", loginUser.getName());
+			Model model) {
 
 		// 全カテゴリー一覧を取得
 		List<Category> categoryList = categoryRepository.findAll();
