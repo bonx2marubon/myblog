@@ -52,4 +52,16 @@ public class Blog {
 		return body;
 	}
 
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
 }

@@ -90,16 +90,20 @@ public class BlogController {
 	@PostMapping("/blogs/{id}/edit")
 	public String update(
 			@PathVariable("id") Integer id,
-			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
-			@RequestParam(value = "title", defaultValue = "") String title,
-			@RequestParam(value = "body", defaultValue = "") String body,
+			@RequestParam("categoryId") Integer categoryId,
+			@RequestParam("title") String title,
+			@RequestParam("body") String body,
 			Model model) {
 
-		// Blogオブジェクトの生成
-		Blog blog = new Blog(categoryId, title, body);
-		// blogsテーブルへの反映(UPDATE)
-		blogRepository.save(blog);
-		// 「/blogs」にGETでリダイレクト
+		// 既存のブログ記事を取得
+		Blog blog = blogRepository.findById(id).orElse(null);
+		if (blog != null) {
+			blog.setCategoryId(categoryId);
+			blog.setTitle(title);
+			blog.setBody(body);
+			blogRepository.save(blog);
+		}
+
 		return "redirect:/blogs";
 	}
 
