@@ -34,21 +34,46 @@
 					</form>
 				</td>
 				<td style="width: 200px;">
-					<form th:action="@{/blogs/{blogId}/delete(blogId=${blog.id})}" method="post" class="delete-form">
-						<button type="button" onclick="confirmDelete(this)">削除</button>
+					<form th:action="@{/blogs/{blogId}/delete(blogId=${blog.id})}" method="post">
+						<button type="button" onclick="openModal(this)">削除</button>
 					</form>
 				</td>
 			</tr>
 		</table>
 	</main>
+	
+	<!-- モーダルウィンドウの記述 -->
+	<div id="deleteModal" class="modal">
+		<div class="modal-content">
+			<p>このページの内容</p>
+			<p>記事を削除します。よろしいですか？</p>
+			<button id="confirmDeleteBtn">OK</button>
+			<button onclick="closeModal()">キャンセル</button>
+		</div>
+	</div>
+	
+	<!-- JavaScriptでモーダルのお手伝い -->
 	<script>
-		function confirmDelete(button) {
-			if (confirm("記事を削除します。よろしいですか？")) {
-				// 親のformを取得して送信
-				button.closest('form').submit();
-			}
-			// キャンセル時は何もしない
+		let currentForm = null; // 今どのformを削除しようとしてるか
+
+		function openModal(button) {
+			currentForm = button.closest('form'); // formを保存
+			document.getElementById('deleteModal').style.display = 'block';
 		}
+
+		function closeModal() {
+			document.getElementById('deleteModal').style.display = 'none';
+			currentForm = null;
+		}
+
+		// OKボタンで送信
+		document.addEventListener("DOMContentLoaded", function () {
+			document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+				if (currentForm) {
+					currentForm.submit();
+				}
+			});
+		});
 	</script>
 
 </body>
