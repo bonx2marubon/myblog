@@ -34,13 +34,23 @@
 					</form>
 				</td>
 				<td style="width: 200px;">
-					<form action="/blogs/delete" method="post">
-						<input type="hidden" name="blogId" th:value="${blog.id}">
-						<button>削除</button>
+					<form th:action="@{/blogs/{blogId}/delete(blogId=${blog.id})}" method="post" class="delete-form">
+						<button type="button" onclick="confirmDelete(this)">削除</button>
 					</form>
 				</td>
 			</tr>
 		</table>
 	</main>
+	<script>
+		function confirmDelete(button) {
+			if (confirm("記事を削除します。よろしいですか？")) {
+				// 親のformを取得して送信
+				button.closest('form').submit();
+			}
+			// キャンセル時は何もしない
+		}
+	</script>
+
 </body>
+
 </html>

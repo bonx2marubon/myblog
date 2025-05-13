@@ -103,5 +103,10 @@ public class BlogController {
 
 	// 記事削除用の記述
 	// 記事削除の実行
+	@PostMapping("/blogs/{id}/delete")
+	public String delete(@PathVariable("id") Integer id, Model model) {
+		blogRepository.deleteById(id);
+		return "redirect:/blogs";
+	}
 
 }
