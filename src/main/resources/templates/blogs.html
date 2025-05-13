@@ -29,8 +29,7 @@
 				<td th:text="${blog.id}"></td>
 				<td th:text="${blog.title}"></td>
 				<td style="width: 200px">
-					<form action="/blogs/edit" method="post">
-						<input type="hidden" name="blogId" th:value="${blog.id}">
+					<form th:action="@{/blogs/{blogId}/edit(blogId=${blog.id})}" method="get">
 						<button>変更</button>
 					</form>
 				</td>
