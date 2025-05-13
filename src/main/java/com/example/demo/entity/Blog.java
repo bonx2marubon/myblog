@@ -31,6 +31,13 @@ public class Blog {
 		this.body = body;
 	}
 
+	public Blog(Integer id, Integer categoryId, String title, String body) {
+		this.id = id;
+		this.categoryId = categoryId;
+		this.title = title;
+		this.body = body;
+	}
+
 	// ゲッター
 	public Integer getId() {
 		return id;
