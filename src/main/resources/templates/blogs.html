@@ -22,12 +22,14 @@
 			<tr>
 				<th>NO</th>
 				<th>タイトル</th>
+				<th>カテゴリー</th>
 				<th>変更</th>
 				<th>削除</th>
 			</tr>
 			<tr th:each="blog:${blogs}">
 				<td th:text="${blog.id}"></td>
 				<td th:text="${blog.title}"></td>
+				<td></td>
 				<td style="width: 200px">
 					<form th:action="@{/blogs/{blogId}/edit(blogId=${blog.id})}" method="get">
 						<button>変更</button>
@@ -48,7 +50,7 @@
 			<p>このページの内容</p>
 			<p>記事を削除します。よろしいですか？</p>
 			<button id="confirmDeleteBtn">OK</button>
-			<button onclick="closeModal()">キャンセル</button>
+			<button id="cancelBtn" onclick="closeModal()">キャンセル</button>
 		</div>
 	</div>
 	
